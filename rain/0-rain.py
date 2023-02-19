@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 def rain(walls):
     if not walls:
         return 0
@@ -17,4 +18,6 @@ def rain(walls):
             right -= 1
 
     return total
+walls = [0,1,0,2,1,0,1,3,2,1,2,1]
+print(rain(walls))  # Output: 6
 
