@@ -1,23 +1,45 @@
+
 #!/usr/bin/python3
+"""
+    Find the maximum amount of rain that the array's walls can withstand.
+"""
+
+
 def rain(walls):
-    if not walls:
-        return 0
+    """
+        Find the maximum amount of rain that the array's walls can withstand.
+    """
+    water_temp = 0
+    water = 0
+    size = len(walls)
+    prev_wall = 0
 
-    left, right = 0, len(walls) - 1
-    left_max, right_max = walls[left], walls[right]
-    total = 0
+    # If list is empty return 0.
+    if size <= 0:
+        return water_temp
 
-    while left < right:
-        if walls[left] < walls[right]:
-            left_max = max(left_max, walls[left])
-            total += left_max - walls[left]
-            left += 1
+    for a in range(size):
+
+        if walls[a] >= walls[prev_wall]:
+            prev_wall = a
+            water_temp = 0
         else:
-            right_max = max(right_max, walls[right])
-            total += right_max - walls[right]
-            right -= 1
+            water += walls[prev_wall] - walls[a]
+            water_temp += walls[prev_wall] - walls[a]
 
-    return total
-walls = [0,1,0,2,0,3,0,4]
-print(rain(walls))  # Output: 6
+    if prev_wall < size - 1:
 
+        # Subtract last temp volume from total.
+        water -= water_temp
+        # Store last peak wall.
+        prev_pass_peak = prev_wall
+        prev_wall = size - 1
+
+        for a in range(size - 1, prev_pass_peak, -1):
+
+            if walls[a] >= walls[prev_wall]:
+                prev_wall = a
+            else:
+                water += walls[prev_wall] - walls[a]
+
+    return water
