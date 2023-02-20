@@ -1,39 +1,30 @@
-
 #!/usr/bin/python3
-
+"""
+Rain
+"""
 
 
 def rain(walls):
-    w = 0
-    water = 0
-    size = len(walls)
-    prev_wall = 0
+    """
+    Return total amount of rainwater retained.
+    """
+    if not walls:
+        return 0
 
-    if size <= 0:
-        return w
-
-    for a in range(size):
-
-        if walls[a] >= walls[prev_wall]:
-            prev_wall = a
-            w = 0
-        else:
-            water += walls[prev_wall] - walls[a]
-            w += walls[prev_wall] - walls[a]
-
-    if prev_wall < size - 1:
-
-    
-        water -= w
-    
-        prev_pass_peak = prev_wall
-        prev_wall = size - 1
-
-        for a in range(size - 1, prev_pass_peak, -1):
-
-            if walls[a] >= walls[prev_wall]:
-                prev_wall = a
-            else:
-                water += walls[prev_wall] - walls[a]
-
-    return water
+    rainwater = 0
+    for i in range(len(walls)):
+        if walls[i] != max(walls):
+            max_lef = 0
+            max_right = 0
+            for j in range(0, i):
+                if max_lef < walls[j]:
+                    max_lef = walls[j]
+            for k in range(i, len(walls)):
+                if max_right < walls[k]:
+                    max_right = walls[k]
+            if max_lef != 0 and max_right != 0:
+                if max_lef < max_right and max_lef > walls[i]:
+                    rainwater += max_lef - walls[i]
+                elif max_right <= max_lef and max_right > walls[i]:
+                    rainwater += max_right - walls[i]
+    return rainwater
