@@ -1,16 +1,19 @@
 #!/usr/bin/python3
 """
-0-main
+Generates Pascal's Triangle up to a given index.
 """
-pascal_triangle = __import__('0-pascal_triangle').pascal_triangle
 
-def print_triangle(triangle):
+def generate_pascal_triangle(n):
     """
-    Print the triangle
+    Returns a list of lists representing the Pascal's Triangle up to the nth row.
     """
-    for row in triangle:
-        print("[{}]".format(",".join([str(x) for x in row])))
-
-
-if __name__ == "__main__":
-    print_triangle(pascal_triangle(5))
+    if n <= 0:
+        return []
+    triangle = [[1], [1, 1]]
+    for i in range(2, n):
+        prev_row = [0] + triangle[i - 1] + [0]
+        row = []
+        for j in range(0, len(prev_row) - 1):
+            row.append(prev_row[j] + prev_row[j + 1])
+        triangle.append(row)
+    return triangle[:n]
