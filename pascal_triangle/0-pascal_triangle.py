@@ -1,16 +1,18 @@
 #!/usr/bin/python3
-""" This function returns a representation of a Pascal's
-    triangle builf from list of lists of integer values
+"""
+pascal's triangle
 """
 
 
 def pascal_triangle(n):
-    """returns a list of lists representing Pascal's triangle"""
-    p_list = []
-    if (n <= 0):
-        return p_list
-    p_list.append([1])
-    for i in range(n -1): # n is number of rows
-        p_list.append([1] + [p_list[i][j] + p_list[i][j + 1]
-                    for j in range(len(p_list[i]) - 1)] + [1])
-    return p_list
+    """get pascal triangle to a certain index"""
+    if n <= 0:
+        return []
+    result = [[1], [1, 1]]
+    for i in range(2, n):
+        list_above = [0] + result[i - 1] + [0]
+        row = []
+        for j in range(0, len(list_above) - 1):
+            row.append(list_above[j] + list_above[j + 1])
+        result.append(row)
+    return result[:n]
